@@ -23,6 +23,6 @@ Currently, all data is stored locally in the app (internal memory). Cloud-based 
 ## Tech Stack
 - **Frontend:** React  
 - **Backend:** C# 
-- **Database:** Currently internal memory; cloud storage planned  
+- **Database:** Firestore
 - **Hosting:** Local development; future cloud hosting possible  
 
