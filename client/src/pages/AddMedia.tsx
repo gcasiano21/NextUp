@@ -22,7 +22,7 @@ export default function AddMedia() {
     resolver: zodResolver(insertMediaItemSchema),
     defaultValues: {
       title: "",
-      type: "",
+      type: undefined,
       creator: "",
       genre: "",
       year: undefined,
