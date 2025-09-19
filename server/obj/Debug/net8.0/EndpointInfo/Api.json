@@ -162,8 +162,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -202,8 +201,7 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
@@ -270,8 +268,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "nullable": true
           },
           "title": {
             "type": "string",
@@ -295,10 +293,13 @@
             "nullable": true
           },
           "dateAdded": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/Timestamp"
           }
         },
+        "additionalProperties": false
+      },
+      "Timestamp": {
+        "type": "object",
         "additionalProperties": false
       },
       "UpdateMediaItemDto": {

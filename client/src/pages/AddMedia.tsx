@@ -120,7 +120,7 @@ export default function AddMedia() {
                             <Input
                               type="number"
                               min="1900"
-                              max="2024"
+                              max={ new Date().getFullYear().toString()}
                               placeholder="2023"
                               {...field}
                               onChange={(e) => field.onChange(e.target.value ? parseInt(e.target.value) : undefined)}

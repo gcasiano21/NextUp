@@ -25,7 +25,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[MediaItemDto, Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Api.Models.MediaItemDto, Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -45,13 +45,13 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CreateMediaItemDto",
+        "Type": "Api.Models.CreateMediaItemDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "MediaItemDto",
+        "Type": "Api.Models.MediaItemDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -71,12 +71,12 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
         "Name": "dto",
-        "Type": "UpdateMediaItemDto",
+        "Type": "Api.Models.UpdateMediaItemDto",
         "IsRequired": true
       }
     ],
@@ -92,7 +92,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -114,7 +114,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "MediaItemDto",
+        "Type": "Api.Models.MediaItemDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

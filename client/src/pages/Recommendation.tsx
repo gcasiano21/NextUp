@@ -26,35 +26,28 @@ const typeDisplayMap = {
 export default function Recommendation() {
   const { type } = useParams<{ type: string }>();
   const [genreFilter, setGenreFilter] = useState<string>("all");
-  
-  const getRandomRecommendation = useMutation({
-    mutationFn: async ({ type, genre }: { type: string; genre?: string }) => {
-      const params = new URLSearchParams();
-      params.append("type", type);
-      if (genre) params.append("genre", genre);
-      
-      const response = await apiRequest("GET", `/api/media/random?${params.toString()}`);
-      return response.json();
-    },
+
+  const getRandomRecommendation = async () => {
+    if (!type) return null;
+    const dbType = type === "tv" ? "TV" : type.charAt(0).toUpperCase() + type.slice(1);
+    const params = new URLSearchParams();
+    params.append("type", dbType);
+    if (genreFilter !== "all") params.append("genre", genreFilter);
+
+    const res = await apiRequest("GET", `/api/media/random?${params.toString()}`);
+    return res.json() as Promise<MediaItem>;
+  };
+
+  const { data: recommendation, refetch, isFetching, error } = useQuery({
+    queryKey: ["randomRecommendation", type, genreFilter],
+    queryFn: getRandomRecommendation,
+    enabled: !!type, 
   });
 
   const handleGetRecommendation = () => {
-    if (type) {
-      getRandomRecommendation.mutate({ 
-        type: type.toUpperCase(), 
-        genre: genreFilter && genreFilter !== "all" ? genreFilter : undefined 
-      });
-    }
+    refetch();
   };
 
-
-  useState(() => {
-    if (type) {
-      handleGetRecommendation();
-    }
-  });
-
-  const recommendation = getRandomRecommendation.data;
   const Icon = recommendation ? iconMap[recommendation.type as keyof typeof iconMap] : Tv;
 
   return (
@@ -94,10 +87,10 @@ export default function Recommendation() {
               <Button 
                 onClick={handleGetRecommendation}
                 variant="secondary"
-                disabled={getRandomRecommendation.isPending}
+                disabled={isFetching}
                 data-testid="button-get-another"
               >
-                <RefreshCw className={`w-4 h-4 mr-2 ${getRandomRecommendation.isPending ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`w-4 h-4 mr-2 ${isFetching ? 'animate-spin' : ''}`} />
                 Get Another
               </Button>
             </div>
@@ -105,12 +98,12 @@ export default function Recommendation() {
 
           <Card data-testid="card-recommendation">
             <CardContent className="p-8">
-              {getRandomRecommendation.isPending ? (
+              {isFetching ? (
                 <div className="text-center py-8" data-testid="loading-recommendation">
                   <div className="w-6 h-6 border-3 border-transparent border-t-primary rounded-full animate-spin mx-auto mb-4"></div>
                   <p className="text-muted-foreground">Finding a great recommendation...</p>
                 </div>
-              ) : getRandomRecommendation.error ? (
+              ) : error ? (
                 <div className="text-center py-8" data-testid="error-no-recommendations">
                   <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                     <Plus className="w-8 h-8 text-muted-foreground" />
@@ -158,10 +151,10 @@ export default function Recommendation() {
                       <div className="flex space-x-3 pt-4">
                         <Button 
                           onClick={handleGetRecommendation}
-                          disabled={getRandomRecommendation.isPending}
+                          disabled={isFetching}
                           data-testid="button-get-another-recommendation"
                         >
-                          <RefreshCw className={`w-4 h-4 mr-2 ${getRandomRecommendation.isPending ? 'animate-spin' : ''}`} />
+                          <RefreshCw className={`w-4 h-4 mr-2 ${isFetching ? 'animate-spin' : ''}`} />
                           Get Another
                         </Button>
                         <Link href="/add">
