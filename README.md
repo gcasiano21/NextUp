@@ -5,8 +5,7 @@
 
 On the home screen, users select a media type and receive a **random recommendation** from the pool of media submitted by other members. This makes it easy and fun for members to explore new media based on their peers’ favorites.
 
-Currently, all data is stored locally in the app (internal memory). Cloud-based storage is planned for future updates to allow persistent, cross-device data.
-
+Currently, all data is stored on a firestore database.
 ---
 
 ## Features
