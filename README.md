@@ -14,8 +14,8 @@ Currently, all data is stored on a firestore database.
 - **CRUD Operations:**  
   - **Create:** Add new media  
   - **Read:** View all media or get a random recommendation  
-  - **Update:** Edit media details  (In-Development)
-  - **Delete:** Remove a media item  (In-Development)
+  - **Update:** Edit media details  
+  - **Delete:** Remove a media item  
 
 ---
 
