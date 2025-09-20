@@ -7,6 +7,7 @@ import Home from "@/pages/Home";
 import AddMedia from "@/pages/AddMedia";
 import Recommendation from "@/pages/Recommendation";
 import NotFound from "@/pages/not-found";
+import Report from "@/pages/Report";
 
 function Router() {
   return (
@@ -14,7 +15,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/add" component={AddMedia} />
       <Route path="/recommendation/:type" component={Recommendation} />
-      <Route component={NotFound} />
+      <Route path="/report" component={Report} />
+      <Route component={NotFound} />\
     </Switch>
   );
 }

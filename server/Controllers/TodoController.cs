@@ -40,6 +40,38 @@ namespace Api.Controllers
                 DateAdded = fields.TryGetValue("DateAdded", out object? dateAddedObj) && dateAddedObj is Timestamp dateAdded ? dateAdded : Timestamp.FromDateTime(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
             };
         }
+        // POST: api/media/report
+        [HttpPost("report")]
+        public async Task<ActionResult<ReportItemDto>> Report([FromBody] InsertReportItemDto dto)
+        {
+            if (string.IsNullOrEmpty(dto.MediaTitle))
+                return BadRequest(new { error = "MediaTitle is required" });
+
+            var now = Timestamp.GetCurrentTimestamp();
+            var reportsCollection = _firestore.Collection("reports"); 
+
+            var data = new Dictionary<string, object>
+            {
+                { "MediaTitle", dto.MediaTitle },
+                { "DateAdded", now }
+            };
+
+            if (!string.IsNullOrEmpty(dto.Issue)) data.Add("Issue", dto.Issue);
+            if (!string.IsNullOrEmpty(dto.CorrectVersion)) data.Add("CorrectVersion", dto.CorrectVersion);
+
+            var docRef = await reportsCollection.AddAsync(data);
+
+            var created = new ReportItemDto
+            {
+                Id = docRef.Id,
+                MediaTitle = dto.MediaTitle,
+                Issue = dto.Issue,
+                CorrectVersion = dto.CorrectVersion,
+                DateAdded = now
+            };
+
+            return CreatedAtAction(nameof(Report), new { id = created.Id }, created);
+        }
 
         // GET: api/media
         [HttpGet]

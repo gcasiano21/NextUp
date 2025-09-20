@@ -32,6 +32,13 @@ export default function Navigation() {
             >
               Add Media
             </Link>
+            <Link 
+              href="/report" 
+              className={`transition-colors ${location === '/report' ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              data-testid="link-nav-add"
+            >
+              Report Issue
+            </Link>
           </nav>
           
           <Link 
